@@ -18,8 +18,8 @@ namespace CaptchaApp
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = new MainWindow{};
-                desktop.MainWindow.Height = Constant.MainWindowHeight;
-                desktop.MainWindow.Width = Constant.MainWindowWidth;
+                desktop.MainWindow.Height = Constant.Window.MainWindowHeight;
+                desktop.MainWindow.Width = Constant.Window.MainWindowWidth;
             }
 
             base.OnFrameworkInitializationCompleted();

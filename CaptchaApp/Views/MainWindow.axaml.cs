@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using CaptchaApp.ViewModels;
 namespace CaptchaApp.Views;
 

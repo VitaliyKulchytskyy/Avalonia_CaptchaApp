@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="CaptchaApp/App.axaml" value="CaptchaApp/CaptchaApp.csproj" />
         <entry key="CaptchaApp/Views/MainWindow.axaml" value="CaptchaApp/CaptchaApp.csproj" />
       </map>
     </option>

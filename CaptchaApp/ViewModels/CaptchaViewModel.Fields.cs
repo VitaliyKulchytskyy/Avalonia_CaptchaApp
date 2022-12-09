@@ -6,14 +6,14 @@ public partial class CaptchaViewModel
 {
     public int MaxVariants
     {
-        get => Constant.AnswerAmount;
+        get => Constant.Captcha.AnswerAmount;
     }
-    
-    private string _captchaReport;
-    public string CaptchaReport
+
+    private string _captchaObstacle;
+    public string CaptchaObstacle
     {
-        get => _captchaReport;
-        set => this.RaiseAndSetIfChanged(ref _captchaReport, value);
+        get => _captchaObstacle;
+        set => this.RaiseAndSetIfChanged(ref _captchaObstacle, value);
     }
 
     private string _sequence;
@@ -37,28 +37,14 @@ public partial class CaptchaViewModel
         set => this.RaiseAndSetIfChanged(ref _answer, value);
     }
 
-    private string[] _answerVariants;
-    public string[] AnswerVariants
-    {
-        get => AnswerVariants;
-        set => this.RaiseAndSetIfChanged(ref _answerVariants, value);
-    }
-
-    private string _variants;
-    public string Variants
-    {
-        get => _variants;
-        set => this.RaiseAndSetIfChanged(ref _variants, value);
-    }
-
     public int MainWindowHeight
     {
-        get => Constant.MainWindowHeight;
+        get => Constant.Window.MainWindowHeight;
     }
     
     public int MainWindowWidth
     {
-        get => Constant.MainWindowWidth;
+        get => Constant.Window.MainWindowWidth;
     }
 
     private string[] _printVariants;
@@ -68,15 +54,23 @@ public partial class CaptchaViewModel
         set => this.RaiseAndSetIfChanged(ref _printVariants, value);   
     }
 
+    private int _attemptsAmountCounter;
+    public int AttemptsAmountCounter
+    {
+        get => _attemptsAmountCounter;
+        set => this.RaiseAndSetIfChanged(ref _attemptsAmountCounter, value);
+    }
+
     private string _captchaBackground;
     public string CaptchaBackground
     {
         get => _captchaBackground;
         set => this.RaiseAndSetIfChanged(ref _captchaBackground, value);   
     }
+
     private static readonly string[] _sBackgroundColors =
     {
-        "DarkSlateGray", 
+        "DarkSlateGray",
         "DeepPink",
         "CornflowerBlue",
         "Cyan"

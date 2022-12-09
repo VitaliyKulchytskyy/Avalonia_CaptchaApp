@@ -52,6 +52,23 @@
                VerticalAlignment="Center"
                Content="{Binding Sequence}"/>
         
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               Grid.ColumnSpan="2"
+               Margin="0"
+               FontSize="35"
+               Width="130"
+               Height="280"
+               VerticalContentAlignment="Stretch"
+               HorizontalContentAlignment="Right"
+               Foreground="Black"
+               Content="{Binding CaptchaObstacle}">
+            <Label.RenderTransform>
+                <RotateTransform Angle="90"/>
+            </Label.RenderTransform>
+        </Label>
+        
+        
         <Label Grid.Row="2" 
                Grid.Column="1" 
                HorizontalAlignment="Center"
@@ -68,12 +85,12 @@
                Content="{Binding PrintVariants[1]}"/>
         
         <Label Grid.Row="3" 
-                   Grid.Column="1" 
-                   Grid.ColumnSpan="3" 
-                   HorizontalContentAlignment="Center"
-                   VerticalContentAlignment="Center"
-                   FontSize="28"
-                   Content="{Binding ElementName=SlValue, Path=Value}"/>
+               Grid.Column="1" 
+               Grid.ColumnSpan="3" 
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+               FontSize="28"
+               Content="{Binding ElementName=SlValue, Path=Value}"/>
         
         <Slider Grid.Row="4" 
                 Grid.Column="1" 

@@ -1,60 +1,66 @@
 using System;
 namespace CaptchaApp.Models;
 
-public sealed class GenerateVariants
+public sealed class GenerateVariants: ICaptchaContract<string>
 {
-    private readonly Int32[] _variants;
-    public readonly Int32 AnswerIndex;
+    private readonly int[] _variants;
+    private readonly int _answerIndex;
     
     public GenerateVariants(int answer)
     {
-        _variants = FillVariants(answer, ref AnswerIndex);
+        _variants = FillVariants(answer, ref _answerIndex);
     }
 
-    public override string ToString()
+    private int[] FillVariants(Int32 answer, ref Int32 getAnswerIndex)
     {
-        string output = "";
-
-        for (Int16 i = 0; i < _variants.Length; i++)
-        {
-            string separator = (i+1 == _variants.Length >> 1) ? Constant.VariantsSeparator.ToString() : ""; 
-            output += $"{i + 1}.   {_variants[i]}\n{separator}";
-        }
-
-        return output;
-    }
-
-    private Int32[] FillVariants(Int32 answer, ref Int32 getAnswerIndex)
-    {
-        Int32[] output = new int[Constant.AnswerAmount];
+        int[] output = new int[Constant.Captcha.AnswerAmount];
+        output[0] = answer;
         
         // Заповнюємо масив з неповторними елементами
-        output[0] = answer;
-        for (Int16 i = 1; i < Constant.AnswerAmount; i++)
+        for (int i = 1; i < output.Length; i++)
         {
             bool unique;
-            Int32 rndValue;
+            int rndValue;
+            
             do
             {
-                rndValue = new Random().Next(Constant.MinInputValue * 2, Constant.MaxInputValue * 2);
+                rndValue = new Random().Next(Constant.Captcha.MinInputValue * 2, Constant.Captcha.MaxInputValue * 2);
                 unique = true;
-                for(Int16 j = 0; j < i; j++)
+                for(int j = 0; j < i; j++)
                     if (output[j] == rndValue)
                         unique = false;
             } while (!unique);
+            
             output[i] = rndValue;
         }
 
         // Перемішуємо масив випадковим чином
-        Int16 n = Constant.AnswerAmount;
+        int n = output.Length;
         while (n > 1)
         {
-            Int16 k = (Int16)new Random().Next(n--);
+            int k = new Random().Next(n--);
             (output[k], output[n]) = (output[n], output[k]);
             if (output[n] == answer)
                 getAnswerIndex = n;
         }
         
+        return output;
+    }
+    
+    public string GetMainResult() => GenerateOptions();
+    
+    public int GetSideResults() => _answerIndex;
+
+    private string GenerateOptions()
+    {
+        string output = "";
+
+        for (Int16 i = 0; i < _variants.Length; i++)
+        {
+            string separator = (i + 1 == _variants.Length >> 1) ? Constant.DataCollector.VariantsSeparator.ToString() : ""; 
+            output += $"{i + 1}.   {_variants[i]}\n{separator}";
+        }
+
         return output;
     }
 }
