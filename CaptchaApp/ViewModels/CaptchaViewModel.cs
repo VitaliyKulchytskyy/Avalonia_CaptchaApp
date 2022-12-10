@@ -10,11 +10,27 @@ public partial class CaptchaViewModel : ViewModelBase
     {
         UpdateCaptcha();
     }
-
+    
     public void UpdateCaptcha()
     {
         UpdateCaptchaData();
         UpdateCaptchaImage();
+    }
+    
+    private void UpdateCaptchaImage()
+    {
+        CaptchaBackground = GetRandomValue(_sBackgroundColors);
+    }
+    
+    private void UpdateCaptchaData()
+    {
+        var captcha = new Captcha();
+        Sequence = captcha.GetSequence();
+        PrintVariants = captcha.GetVariantsInFormatString().Split(Constant.DataCollector.VariantsSeparator);
+        AnswerIndex = captcha.GetAnswerIndex();
+        Answer = captcha.GetAnswer();
+        CaptchaObstacle = captcha.GetObstacles();
+        AttemptsAmountCounter = 0;
     }
 
     public void CheckSliderInput(uint sliderValue)
@@ -49,22 +65,6 @@ public partial class CaptchaViewModel : ViewModelBase
             UpdateCaptcha();
 
         outputCaptchaMessage.Show();
-    }
-    
-    private void UpdateCaptchaImage()
-    {
-        CaptchaBackground = GetRandomValue(_sBackgroundColors);
-    }
-    
-    private void UpdateCaptchaData()
-    {
-        var captcha = new Captcha();
-        Sequence = captcha.GetSequence();
-        PrintVariants = captcha.GetVariantsString().Split(Constant.DataCollector.VariantsSeparator);
-        AnswerIndex = captcha.GetAnswerIndex();
-        Answer = captcha.GetAnswer();
-        CaptchaObstacle = captcha.GetObstacles();
-        AttemptsAmountCounter = 0;
     }
 
     private string GetRandomValue(string[] array)

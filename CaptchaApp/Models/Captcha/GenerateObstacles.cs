@@ -1,11 +1,18 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 namespace CaptchaApp.Models;
 
 public class GenerateObstacles: ICaptchaContract<string>
 {
     private readonly string _obstacles;
+
+    public GenerateObstacles()
+    {
+        _obstacles = GenObstacles();
+    }
+
+    public string GetMainResult()
+        => _obstacles;
 
     private string GenObstacles()
     {
@@ -20,17 +27,6 @@ public class GenerateObstacles: ICaptchaContract<string>
 
         return output;
     }
-    
-    public GenerateObstacles()
-    {
-        _obstacles = GenObstacles();
-    }
-
-    public string GetMainResult()
-        => _obstacles;
-
-    public override string ToString()
-        => _obstacles;
 }
 
 public static class StringExtension

@@ -36,22 +36,6 @@
                 Background="{Binding CaptchaBackground}">
         </Canvas>
         
-        <Button Grid.Row="1" Grid.Column="3" 
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                CornerRadius="0"
-                Command="{Binding UpdateCaptcha}">
-            <Image Source="/Assets/reload.png"/>
-        </Button>
-        
-        <Label Grid.Row="1"
-               Grid.Column="1"
-               Grid.ColumnSpan="2"
-               FontSize="38"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Content="{Binding Sequence}"/>
-        
         <Label Grid.Row="1"
                Grid.Column="1"
                Grid.ColumnSpan="2"
@@ -68,6 +52,21 @@
             </Label.RenderTransform>
         </Label>
         
+        <Button Grid.Row="1" Grid.Column="3" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                CornerRadius="0"
+                Command="{Binding UpdateCaptcha}">
+            <Image Source="/Assets/reload.png"/>
+        </Button>
+        
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               Grid.ColumnSpan="2"
+               FontSize="38"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Content="{Binding Sequence}"/>
         
         <Label Grid.Row="2" 
                Grid.Column="1" 

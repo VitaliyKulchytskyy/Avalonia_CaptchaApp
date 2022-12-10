@@ -1,50 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace CaptchaApp.Models;
 
 public sealed class GenerateVariants: ICaptchaContract<string>
 {
     private readonly int[] _variants;
-    private readonly int _answerIndex;
+    private int _answerIndex;
     
     public GenerateVariants(int answer)
     {
-        _variants = FillVariants(answer, ref _answerIndex);
-    }
-
-    private int[] FillVariants(Int32 answer, ref Int32 getAnswerIndex)
-    {
-        int[] output = new int[Constant.Captcha.AnswerAmount];
-        output[0] = answer;
-        
-        // Заповнюємо масив з неповторними елементами
-        for (int i = 1; i < output.Length; i++)
-        {
-            bool unique;
-            int rndValue;
-            
-            do
-            {
-                rndValue = new Random().Next(Constant.Captcha.MinInputValue * 2, Constant.Captcha.MaxInputValue * 2);
-                unique = true;
-                for(int j = 0; j < i; j++)
-                    if (output[j] == rndValue)
-                        unique = false;
-            } while (!unique);
-            
-            output[i] = rndValue;
-        }
-
-        // Перемішуємо масив випадковим чином
-        int n = output.Length;
-        while (n > 1)
-        {
-            int k = new Random().Next(n--);
-            (output[k], output[n]) = (output[n], output[k]);
-            if (output[n] == answer)
-                getAnswerIndex = n;
-        }
-        
-        return output;
+        _variants = FillVariants(answer);
     }
     
     public string GetMainResult() => GenerateOptions();
@@ -54,11 +21,45 @@ public sealed class GenerateVariants: ICaptchaContract<string>
     private string GenerateOptions()
     {
         string output = "";
-
-        for (Int16 i = 0; i < _variants.Length; i++)
+        int halfOfLength = _variants.Length >> 1;
+        
+        for (int i = 0; i < _variants.Length; i++)
         {
-            string separator = (i + 1 == _variants.Length >> 1) ? Constant.DataCollector.VariantsSeparator.ToString() : ""; 
+            string separator = (i + 1 == halfOfLength) ? Constant.DataCollector.VariantsSeparator.ToString() : ""; 
             output += $"{i + 1}.   {_variants[i]}\n{separator}";
+        }
+
+        return output;
+    }
+    
+    private int[] FillVariants(int answer)
+    {
+        var output = new HashSet<int>(Constant.Captcha.AnswerAmount) {answer};
+
+        for (int i = 0; i < Constant.Captcha.AnswerAmount - 1; i++)
+        {
+            int rndValue;
+            
+            do
+                rndValue = new Random().Next(Constant.Captcha.MinInputValue * 2, Constant.Captcha.MaxInputValue * 2);
+            while (output.Contains(rndValue));
+
+            output.Add(rndValue);
+        }
+
+        return GetShuffledSet(output, answer, ref _answerIndex);
+    }
+
+    private int[] GetShuffledSet(HashSet<int> set, int answer, ref int answerIndex)
+    {
+        int[] output = set.ToArray();
+
+        for (int i = output.Length - 1; i > 0; i--)
+        {
+            int j = new Random().Next(i + 1);
+            (output[i], output[j]) = (output[j], output[i]);
+            if (output[i] == answer)
+                answerIndex = i;
         }
 
         return output;

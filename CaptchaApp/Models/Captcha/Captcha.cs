@@ -20,7 +20,7 @@ public sealed class Captcha
     public int GetAnswer()
         => _genSequence.GetSideResults();
 
-    public string GetVariantsString()
+    public string GetVariantsInFormatString()
         => _genVariants.GetMainResult();
 
     public int GetAnswerIndex()

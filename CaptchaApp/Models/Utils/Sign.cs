@@ -36,7 +36,7 @@ static class SignExtension
         };
     }
 
-    public static Int32 Calc(this Sign sign, Int32 fOpr, Int32 sOpr)
+    public static int Calc(this Sign sign, int fOpr, int sOpr)
     {
         return sign switch
         {
